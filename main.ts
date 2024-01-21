@@ -236,13 +236,14 @@ export class List<T> implements Iterable<T> {
    * console.log(result);  // Output: 3 (average of 1, 2, 3, 4, 5)
    */
   avg(): number {
-    const numericalElements = this.numbers();
-    if (numericalElements.isEmpty()) {
+    const numbers = this.numbers();
+    if (numbers.isEmpty()) {
       return 0; // Return 0 for an empty list or if no numerical elements are found.
     }
-    const sum = numericalElements.sum();
-    const count = numericalElements.size;
-    return sum / count;
+    // We could use `sum` here but it would call `numbers` again internally,
+    // which would be a waste since we already have a guaranteed list of numbers.
+    const sum = numbers.reduce(0, (a, b) => a + b);
+    return sum / numbers.size;
   }
 
   /**
@@ -872,12 +873,14 @@ export class List<T> implements Iterable<T> {
    * The `numbers` method filters the original list, retaining only the elements of type `number`.
    *
    * @example
-   * const mixedList = List.of(1, 'two', 3, 'four', 5);
+   * const mixedList = List.of(1, 'two', 3, 'four', 5, NaN, Infinity);
    * const numberList = mixedList.numbers();
    * console.log([...numberList]);  // Output: [1, 3, 5]
    */
   numbers(): List<number> {
-    return this.filter((item) => typeof item === "number") as List<number>;
+    return this.filter(
+      (item) => typeof item === "number" && Number.isFinite(item),
+    ) as List<number>;
   }
 
   /**
