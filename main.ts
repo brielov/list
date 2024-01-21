@@ -348,24 +348,6 @@ export class List<T> implements Iterable<T> {
   }
 
   /**
-   * Computes the cube of each numerical element in the list.
-   *
-   * @returns {List<number>} A new List instance containing the cubes of all numerical elements.
-   *
-   * @description
-   * The `cube` method creates a new list with each numerical element cubed.
-   * Non-numerical elements are ignored during the cube operation.
-   *
-   * @example
-   * const numberList = List.of(2, 3, 4);
-   * const cubedList = numberList.cube();
-   * console.log([...cubedList]);  // Output: [8, 27, 64]
-   */
-  cube(): List<number> {
-    return this.power(3);
-  }
-
-  /**
    * Returns a new List instance containing elements that are present in the current list but not in another list.
    *
    * @param {List<T>} other - The list to compare with.
@@ -388,26 +370,6 @@ export class List<T> implements Iterable<T> {
       }
     }
     return new List(result);
-  }
-
-  /**
-   * Computes the result of dividing all numerical elements in the list.
-   *
-   * @returns {number} The result of dividing all numerical elements in the list.
-   *
-   * @description
-   * The `divide` method iterates over the elements of the list, dividing the numerical values.
-   * Non-numerical elements are ignored during the division.
-   *
-   * @example
-   * const numberList = List.of(100, 5, 2);
-   * const result = numberList.divide();
-   * console.log(result);  // Output: 10 (100 / 5 / 2)
-   */
-  divide(): number {
-    return this.numbers().reduce(1, (acc, cur) =>
-      cur !== 0 ? acc / cur : acc,
-    );
   }
 
   /**
@@ -847,24 +809,6 @@ export class List<T> implements Iterable<T> {
   }
 
   /**
-   * Computes the result of multiplying all numerical elements in the list.
-   *
-   * @returns {number} The result of multiplying all numerical elements in the list.
-   *
-   * @description
-   * The `multiply` method iterates over the elements of the list, multiplying the numerical values.
-   * Non-numerical elements are ignored during the multiplication.
-   *
-   * @example
-   * const numberList = List.of(2, 3, 4);
-   * const result = numberList.multiply();
-   * console.log(result);  // Output: 24 (2 * 3 * 4)
-   */
-  multiply(): number {
-    return this.numbers().reduce(1, (acc, cur) => acc * cur);
-  }
-
-  /**
    * Creates a new List instance containing only the numerical elements from the original list.
    *
    * @returns {List<number>} A new List instance containing only the numerical elements.
@@ -881,25 +825,6 @@ export class List<T> implements Iterable<T> {
     return this.filter(
       (item) => typeof item === "number" && Number.isFinite(item),
     ) as List<number>;
-  }
-
-  /**
-   * Computes the result of raising each numerical element to the specified power.
-   *
-   * @param {number} exponent - The exponent to which each numerical element will be raised.
-   * @returns {List<number>} A new List instance containing the result of the power operation on each element.
-   *
-   * @description
-   * The `power` method creates a new list with each numerical element raised to the specified power.
-   * Non-numerical elements are ignored during the power operation.
-   *
-   * @example
-   * const numberList = List.of(2, 3, 4);
-   * const poweredList = numberList.power(2);
-   * console.log([...poweredList]);  // Output: [4, 9, 16]
-   */
-  power(exponent: number): List<number> {
-    return this.numbers().map((num) => num ** exponent);
   }
 
   /**
@@ -1097,63 +1022,6 @@ export class List<T> implements Iterable<T> {
    */
   splice(start: number, deleteCount: number, ...items: readonly T[]): List<T> {
     return new List(this.arr.toSpliced(start, deleteCount, ...items));
-  }
-
-  /**
-   * Computes the square root of each numerical element in the list.
-   *
-   * @returns {List<number>} A new List instance containing the square roots of all numerical elements.
-   *
-   * @description
-   * The `sqrt` method creates a new list with the square root of each numerical element.
-   * Non-numerical elements are ignored during the square root operation.
-   *
-   * @example
-   * const numberList = List.of(4, 9, 16);
-   * const sqrtList = numberList.sqrt();
-   * console.log([...sqrtList]);  // Output: [2, 3, 4]
-   */
-  sqrt(): List<number> {
-    return this.numbers().map((num) => Math.sqrt(num));
-  }
-
-  /**
-   * Computes the square of each numerical element in the list.
-   *
-   * @returns {List<number>} A new List instance containing the squares of all numerical elements.
-   *
-   * @description
-   * The `square` method creates a new list with each numerical element squared.
-   * Non-numerical elements are ignored during the square operation.
-   *
-   * @example
-   * const numberList = List.of(2, 3, 4);
-   * const squaredList = numberList.square();
-   * console.log([...squaredList]);  // Output: [4, 9, 16]
-   */
-  square(): List<number> {
-    return this.power(2);
-  }
-
-  /**
-   * Computes the result of subtracting all numerical elements in the list.
-   *
-   * @returns {number} The result of subtracting all numerical elements in the list.
-   *
-   * @description
-   * The `subtract` method iterates over the elements of the list, subtracting the numerical values.
-   * Non-numerical elements are ignored during the subtraction.
-   *
-   * @example
-   * const numberList = List.of(10, 5, 3);
-   * const result = numberList.subtract();
-   * console.log(result);  // Output: 2 (10 - 5 - 3)
-   */
-  subtract(): number {
-    const numeric = this.numbers();
-    if (numeric.isEmpty()) return 0;
-    const initialValue = numeric.first()!;
-    return numeric.slice(1).reduce(initialValue, (acc, cur) => acc - cur);
   }
 
   /**
