@@ -171,24 +171,6 @@ export class List<T> implements Iterable<T> {
   }
 
   /**
-   * Computes the absolute value of each numerical element in the list.
-   *
-   * @returns {List<number>} A new List instance containing the absolute values of all numerical elements.
-   *
-   * @description
-   * The `abs` method creates a new list with the absolute value of each numerical element.
-   * Non-numerical elements are ignored during the absolute value operation.
-   *
-   * @example
-   * const numberList = List.of(-2, 3, -4);
-   * const absList = numberList.abs();
-   * console.log([...absList]);  // Output: [2, 3, 4]
-   */
-  abs(): List<number> {
-    return this.numbers().map((num) => Math.abs(num));
-  }
-
-  /**
    * Appends elements to the end of the list, creating a new List instance.
    *
    * @param {...readonly T[]} items - The elements to append to the list.
