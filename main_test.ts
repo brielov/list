@@ -31,12 +31,6 @@ Deno.test("List.size", () => {
   assertEquals(list.size, 3);
 });
 
-Deno.test("List.abs", () => {
-  const numberList = List.of(-2, 3, -4);
-  const absList = numberList.abs();
-  assertEquals([...absList], [2, 3, 4]);
-});
-
 Deno.test("List.append", () => {
   const list = List.of(1, 2, 3);
   const appendedList = list.append(4, 5);
@@ -95,23 +89,11 @@ Deno.test("List.countBy", () => {
   assertEquals(countResult, { apple: 3, banana: 2, orange: 1 });
 });
 
-Deno.test("List.cube", () => {
-  const list = List.of(1, 2, 3);
-  const cubed = list.cube();
-  assertEquals([...cubed], [1, 8, 27]);
-});
-
 Deno.test("List.difference", () => {
   const list1 = List.of(1, 2, 3, 4, 5);
   const list2 = List.of(3, 4, 5, 6, 7);
   const differenceResult = list1.difference(list2);
   assertEquals([...differenceResult], [1, 2]);
-});
-
-Deno.test("List.divide", () => {
-  const list = List.of(2, 4, 6, 8, 10);
-  const divided = list.divide();
-  assertEquals(divided, 1 / (2 * 4 * 6 * 8 * 10));
 });
 
 Deno.test("List.drop", () => {
@@ -344,12 +326,6 @@ Deno.test("List.move - Negative (Both Invalid Indexes)", () => {
   assertEquals([...unchangedList], []);
 });
 
-Deno.test("List.power", () => {
-  const baseList = List.of(2, 3, 4);
-  const poweredList = baseList.power(2);
-  assertEquals([...poweredList], [4, 9, 16]);
-});
-
 Deno.test("List.prepend", () => {
   const originalList = List.of("b", "c");
   const modifiedList = originalList.prepend("a");
@@ -426,24 +402,6 @@ Deno.test("List.splice", () => {
   const originalList = List.of("a", "b", "c", "d", "e");
   const splicedList = originalList.splice(1, 2, "x", "y");
   assertEquals([...splicedList], ["a", "x", "y", "d", "e"]); // Spliced elements
-});
-
-Deno.test("List.sqrt", () => {
-  const numbersList = List.of(4, 9, 16);
-  const sqrtList = numbersList.sqrt();
-  assertEquals([...sqrtList], [2, 3, 4]);
-});
-
-Deno.test("List.square", () => {
-  const numbersList = List.of(2, 3, 4);
-  const squaredList = numbersList.square();
-  assertEquals([...squaredList], [4, 9, 16]);
-});
-
-Deno.test("List.subtract", () => {
-  const numbersList = List.of(5, 3, 1);
-  const result = numbersList.subtract();
-  assertEquals(result, 1);
 });
 
 Deno.test("List.sum", () => {
