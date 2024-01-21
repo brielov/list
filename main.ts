@@ -58,6 +58,17 @@ function assert(condition: any, message: string): asserts condition {
 }
 
 /**
+ * Checks if the given index is within the valid range for the list.
+ *
+ * @param {List<T>} list - The value to be checked.
+ * @param index - The index to check.
+ * @returns `true` if the index is valid, `false` otherwise.
+ */
+function isValidIndex<T>(list: List<T>, index: number): boolean {
+  return index >= 0 && index < list.size;
+}
+
+/**
  * Immutable list data structure.
  *
  * @template T - The type of elements in the list.
@@ -739,16 +750,6 @@ export class List<T> implements Iterable<T> {
   }
 
   /**
-   * Checks if the given index is within the valid range for the list.
-   * @param index - The index to check.
-   * @returns `true` if the index is valid, `false` otherwise.
-   * @private
-   */
-  private isValidIndex(index: number): boolean {
-    return index >= 0 && index < this.arr.length;
-  }
-
-  /**
    * Retrieves the last element of the list.
    *
    * @returns {T | undefined} The last element of the list or undefined if the list is empty.
@@ -832,7 +833,7 @@ export class List<T> implements Iterable<T> {
   move(fromIndex: number, toIndex: number): List<T> {
     fromIndex = resolveIndex(this, fromIndex);
     toIndex = resolveIndex(this, toIndex);
-    if (!this.isValidIndex(fromIndex) || !this.isValidIndex(toIndex)) {
+    if (!isValidIndex(this, fromIndex) || !isValidIndex(this, toIndex)) {
       // If either index is invalid, return the original list without modifications
       return this;
     }
@@ -1173,8 +1174,8 @@ export class List<T> implements Iterable<T> {
   /**
    * Creates a new List instance by swapping elements at two specified indices.
    *
-   * @param {number} a - The index of the first element to swap. Negative values count from the end of the list.
-   * @param {number} b - The index of the second element to swap. Negative values count from the end of the list.
+   * @param {number} index1 - The index of the first element to swap. Negative values count from the end of the list.
+   * @param {number} index2 - The index of the second element to swap. Negative values count from the end of the list.
    * @returns {List<T>} A new List instance with the elements at the specified indices swapped.
    * @template T - The type of elements in the list.
    *
@@ -1183,14 +1184,14 @@ export class List<T> implements Iterable<T> {
    * const swappedList = myList.swap(0, 2);
    * console.log([...swappedList]);  // Output: ["cherry", "banana", "apple"]
    */
-  swap(a: number, b: number): List<T> {
-    a = resolveIndex(this, a);
-    b = resolveIndex(this, b);
-    if (!this.isValidIndex(a) || !this.isValidIndex(b)) {
+  swap(index1: number, index2: number): List<T> {
+    index1 = resolveIndex(this, index1);
+    index2 = resolveIndex(this, index2);
+    if (!isValidIndex(this, index1) || !isValidIndex(this, index2)) {
       return this;
     }
     const arr = this.arr.slice();
-    [arr[a], arr[b]] = [arr[b], arr[a]];
+    [arr[index1], arr[index2]] = [arr[index2], arr[index1]];
     return new List(arr);
   }
 
