@@ -287,6 +287,32 @@ export class List<T> implements Iterable<T> {
   }
 
   /**
+   * Maps each element to a new value as specified by the predicate function and creates a new List instance
+   * containing only the non-nullable mapped elements.
+   *
+   * @param {(item: T, index: number) => U} predicate - The function used to map each element.
+   * @returns {List<NonNullable<U>>} A new List instance with non-nullable mapped elements.
+   * @template U - The type of elements in the new list.
+   *
+   * @example
+   * const myList = List.of(1, 2, 3, 4, 5);
+   * const mappedList = myList.compactMap((item) => (item % 2 === 0 ? item : null));
+   * console.log([...mappedList]); // Output: [2, 4]
+   */
+  compactMap<U>(
+    predicate: (item: T, index: number) => U
+  ): List<NonNullable<U>> {
+    const items: NonNullable<U>[] = [];
+    for (let i = 0; i < this.arr.length; i++) {
+      const mappedItem = predicate(this.arr[i], i);
+      if (isDefined(mappedItem)) {
+        items.push(mappedItem);
+      }
+    }
+    return new List(items);
+  }
+
+  /**
    * Concatenates multiple lists with the current list, creating a new List instance.
    *
    * @param {...readonly List<T>[]} items - Lists to concatenate with the current list.
@@ -805,7 +831,7 @@ export class List<T> implements Iterable<T> {
    */
   numbers(): List<number> {
     return this.filter(
-      (item) => typeof item === "number" && Number.isFinite(item),
+      (item) => typeof item === "number" && Number.isFinite(item)
     ) as List<number>;
   }
 

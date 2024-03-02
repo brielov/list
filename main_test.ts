@@ -74,6 +74,15 @@ Deno.test("List.compact", () => {
   assertEquals([...compacted], [1, 3, 5]);
 });
 
+Deno.test("List.compactMap", () => {
+  const list = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+  const compacted = list.compactMap((n) => {
+    if (n % 2 !== 0) return;
+    return n.toString();
+  });
+  assertEquals([...compacted], "02468".split(""));
+});
+
 Deno.test("List.concat", () => {
   const list1 = List.of(1, 2, 3);
   const list2 = List.of(4, 5, 6);
@@ -128,7 +137,7 @@ Deno.test("List.enumerate", () => {
       [0, "apple"],
       [1, "banana"],
       [2, "orange"],
-    ],
+    ]
   );
 });
 
@@ -215,7 +224,7 @@ Deno.test("List.groupBy", () => {
     { type: "fruit", name: "apple" },
     { type: "fruit", name: "banana" },
     { type: "vegetable", name: "carrot" },
-    { type: "fruit", name: "orange" },
+    { type: "fruit", name: "orange" }
   );
 
   const grouped = list.groupBy((item) => item.type);
@@ -373,7 +382,7 @@ Deno.test("List.shuffle", () => {
   const expectedElements = [1, 2, 3, 4, 5];
   assertEquals(
     true,
-    expectedElements.every((element) => shuffledList.has(element)),
+    expectedElements.every((element) => shuffledList.has(element))
   );
 });
 
@@ -481,6 +490,6 @@ Deno.test("List.zip", () => {
       ["a", 1],
       ["b", 2],
       ["c", 3],
-    ],
+    ]
   );
 });
